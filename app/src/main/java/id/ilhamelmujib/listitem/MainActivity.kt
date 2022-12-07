@@ -1,5 +1,6 @@
 package id.ilhamelmujib.listitem
 
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -21,6 +22,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
@@ -52,13 +54,6 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-
-@Preview(showBackground = true, device = Devices.PIXEL_4)
-@Composable
-fun ListItemComposeAppPreview() {
-    ListItemComposeApp()
-}
-
 @Composable
 fun ListItemComposeApp() {
     Surface(
@@ -80,29 +75,40 @@ fun Greeting(name: String) {
         )
     )
 
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier.padding(8.dp)
+    Card(
+        backgroundColor = MaterialTheme.colors.primary,
+        shape = MaterialTheme.shapes.medium,
+        modifier = Modifier.padding(vertical = 4.dp, horizontal = 8.dp)
     ) {
-        Image(
-            painter = painterResource(R.drawable.jetpack_compose),
-            contentDescription = "Logo Jetpack Compose",
-            modifier = Modifier.size(animateSizeDp),
-        )
-        Spacer(modifier = Modifier.width(8.dp))
-        Column(Modifier.weight(1f)) {
-            Text(
-                text = "Heyoo $name!",
-                fontWeight = FontWeight.Bold,
-                fontSize = 25.sp
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.padding(8.dp)
+        ) {
+            Image(
+                painter = painterResource(R.drawable.jetpack_compose),
+                contentDescription = "Logo Jetpack Compose",
+                modifier = Modifier.size(animateSizeDp),
             )
-            Text(text = "Welcome to Jungle")
-        }
-        IconButton(onClick = { isExpanded.value = !isExpanded.value }) {
-            Icon(
-                imageVector = if (isExpanded.value) Icons.Outlined.ExpandLess else Icons.Outlined.ExpandMore,
-                contentDescription = if (isExpanded.value) "Show less" else "Show more"
-            )
+            Spacer(modifier = Modifier.width(8.dp))
+            Column(Modifier.weight(1f)) {
+                Text(
+                    text = "Heyoo $name!",
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 25.sp
+                )
+                Text(
+                    text = "Welcome to Jungle",
+                    style = MaterialTheme.typography.body1.copy(
+                        fontStyle = FontStyle.Italic
+                    )
+                )
+            }
+            IconButton(onClick = { isExpanded.value = !isExpanded.value }) {
+                Icon(
+                    imageVector = if (isExpanded.value) Icons.Outlined.ExpandLess else Icons.Outlined.ExpandMore,
+                    contentDescription = if (isExpanded.value) "Show less" else "Show more"
+                )
+            }
         }
     }
 }
@@ -125,5 +131,15 @@ fun GreetingList(names: List<String>) {
         Box(contentAlignment = Alignment.Center) {
             Text("No people to great!")
         }
+    }
+}
+
+
+@Preview(showBackground = true)
+@Preview(showBackground = true, uiMode = UI_MODE_NIGHT_YES)
+@Composable
+fun ListItemComposeAppPreview() {
+    ListItemTheme {
+        ListItemComposeApp()
     }
 }
